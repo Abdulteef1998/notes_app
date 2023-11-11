@@ -5,28 +5,32 @@ import 'package:noteapp/cubits/add_note_cubit/add_note_cubit.dart';
 import 'add_note_form.dart';
 
 class AddNoteBottomSheet extends StatelessWidget {
-  AddNoteBottomSheet({super.key});
+  AddNoteBottomSheet({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      child: SingleChildScrollView(
-          child: BlocConsumer<AddNoteCubit, AddNoteState>(
-        listener: (context, state) {
-          if (state is AddNoteFailure) {
-            print('failed ${state.errorMessage}');
-            if (state is AddNoteSuccess) {
+    return BlocProvider(
+      create: (context) => AddNoteCubit(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: BlocConsumer<AddNoteCubit, AddNoteState>(
+          listener: (context, state) {
+            if (state is AddNoteFailure) {
+              print('failed ${state.errorMessage}');
+            } else if (state is AddNoteSuccess) {
               Navigator.pop(context);
             }
-          }
-        },
-        builder: (context, state) {
-          return ModalProgressHUD(
+          },
+          builder: (context, state) {
+            return ModalProgressHUD(
               inAsyncCall: state is AddNoteLoading ? true : false,
-              child: const AddNoteForm());
-        },
-      )),
+              child: const SingleChildScrollView(
+                child: AddNoteForm(),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
