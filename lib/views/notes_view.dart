@@ -12,6 +12,7 @@ class NotesView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
+              isScrollControlled: true, //'تستطيع من خلال رفع الكيبورد
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16)),
               context: context,
