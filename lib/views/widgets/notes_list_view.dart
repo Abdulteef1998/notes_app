@@ -6,7 +6,7 @@ import 'package:noteapp/views/widgets/note_item.dart';
 
 class NotesListView extends StatelessWidget {
   const NotesListView({super.key});
-  final data = const [];
+  //final data = const [];
   @override
   Widget build(BuildContext context) {
     List<NoteModel> notes = BlocProvider.of<NotesCubit>(context).notes ?? [];
@@ -17,9 +17,11 @@ class NotesListView extends StatelessWidget {
             itemCount: notes.length,
             padding: EdgeInsets.zero,
             itemBuilder: (context, index) {
-              return const Padding(
-                padding: EdgeInsets.symmetric(vertical: 4),
-                child: NoteItem(),
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: NoteItem(
+                  note: notes[index],
+                ),
               );
             }),
       );
